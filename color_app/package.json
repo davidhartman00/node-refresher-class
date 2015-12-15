@@ -1,0 +1,19 @@
+{
+  "name": "chat_app",
+  "version": "1.0.0",
+  "description": "my first chat application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "chat",
+    "realtime"
+  ],
+  "author": "DavidHartman00",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.13.3",
+    "socket.io": "^1.3.7"
+  }
+}

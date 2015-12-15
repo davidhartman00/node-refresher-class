@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <script src="jquery-2.1.4.js"></script>
+    <title>My Movies App</title>
+  </head>
+  <body>
+    <h1>Welcome to the Movies!</h1>
+    <button id='get-movies'>Get Movie Titles</button>
+    <br><br>
+    <button id='add-movies'>
+      <a href="/movie/new">
+        Add a Movie
+      </a>
+    </button>
+    <ul>
+    </ul>
+    <script>
+      var myUL              = $('ul');
+      var getMoviesButton   = $('#get-movies');
+      var moreDetailButton  = $();
+      var addMoviesButton   = $('#add-movies');
+
+      getMoviesButton.on('click', function(){
+        $.ajax({
+          url:    '/movies',
+          method: 'GET'
+        })
+        .done(function(data){
+          $.each(data, function(index, value){
+            console.log("val", value);
+            myUL.append('<li> Title: ' + value.title + '<br>  Year: ' +
+            value.year + '<br><button class="more-detail" id=' + value._id + '>More Detail</button></li>');
+            moreDetailButton = $('.more-detail');
+          })
+          moreDetailButton.on('click', function(){
+            console.log('clicked ' + this.id);
+            var that = this;
+            $.ajax({
+              url:    '/movie/' + that.id,
+              method: 'GET'
+            })
+            .done(function(data){
+              $(that)
+              .after('<ul>' +
+                '<li>'
+                + data.title
+                + '</li>'+
+                '<li>'
+                + data.year
+                + '</li>'+
+                '</ul>');
+              console.log(data);
+            })
+          })
+          // myUL.append('<li>' + data ' </li>')
+          // console.log(data);
+          // homework: append the movies to somewhere in your page
+        })
+      })
+      addMoviesButton.on('click', function(){
+        console.log('button clicked');
+      })
+    </script>
+  </body>
+</html>

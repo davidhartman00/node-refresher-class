@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="pure-min.css">
+    <script src="jquery-2.1.4.js" charset="utf-8"></script>
+    <!--  bring in the socketio client library-->
+    <script src="/socket.io/socket.io.js"></script>
+    <title>My Chat app</title>
+  </head>
+  <body>
+    <h1>Welcome to the chat</h1>
+    <button type="button" id="red-button">Red</button>
+    <button type="button" id="green-button">Green</button>
+    <button type="button" id="blue-button">Blue</button>
+    <div id="input-div">
+      <input type="text" id="my-input-box">
+      <button id="send-button">Send</button>
+      <ul>
+
+      </ul>
+    </div>
+    <script>
+      var socket = io();
+      var redButton     = document.querySelector('#red-button');
+      var greenButton   = document.querySelector('#green-button');
+      var blueButton    = document.querySelector('#blue-button');
+      var sendButton    = $('#send-button');
+      var myInputBox    = $('#my-input-box');
+      var myUL          = $('ul');
+      var body          = document.body;
+
+      redButton.addEventListener('click', function(){
+        socket.emit('color', 'red');
+      });
+      greenButton.addEventListener('click', function(){
+        socket.emit('color', 'green');
+      });
+      blueButton.addEventListener('click', function(){
+        socket.emit('color', 'blue');
+      });
+      sendButton.on('click', function(){
+        socket.emit('chat-text', myInputBox.val())
+        myInputBox.val('');
+        console.log(myInputBox.val());
+      })
+      socket.on('color', function(data){
+        body.style.backgroundColor = data;
+      })
+      socket.on('forward-text', function(data){
+        myUL.append('<li>' + data + '</li>');
+      })
+    </script>
+  </body>
+</html>

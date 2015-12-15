@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <script src="jquery-2.1.4.js" charset="utf-8"></script>
+    <title>jQuery Review</title>
+  </head>
+  <body>
+    <h1>Welcome to my jQuery App</h1>
+    <input id="my-text-input" type='text'>
+    <button id="send-button">Send</button>
+    <ul>
+      <li>buy milk</li>
+      <li>take a shower</li>
+    </ul>
+    <script>
+      var myTextInput = $('#my-text-input');
+      var sendButton = $('#send-button');
+      var myUL = $('ul');
+
+      sendButton.on('click', function(evt){
+        myUL.append('<li>'+ myTextInput.val() +'</li>')
+        myTextInput.val('')
+      });
+    </script>
+  </body>
+</html>
